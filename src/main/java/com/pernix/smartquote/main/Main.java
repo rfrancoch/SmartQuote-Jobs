@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class Main {
 
+    public static final String EMAIL_SUBJECT = "Nueva notificación de solicitud";
+
     public static void main(String[] args) {
         MySqlService mySqlService = new MySqlService();
         ArrayList<RequisitionInfo> requisitionsRetrieved = mySqlService.getNewRequisitions();
@@ -20,7 +22,7 @@ public class Main {
         for(RequisitionInfo requisition : requisitionsRetrieved){
             String[] email = {requisition.getEmail()};
             String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisition));
-            mailService.generateAndSendEmail(email, "Nueva notificación de solicitud", mailBody);
+            mailService.generateAndSendEmail(email, EMAIL_SUBJECT, mailBody);
         }
 
     }

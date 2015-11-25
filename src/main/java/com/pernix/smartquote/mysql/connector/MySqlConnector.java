@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public class MySqlConnector {
 
+    public static final String MYSQL_URL = "jdbc:mysql://localhost/smartquote?user=root&password=root";
+    public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
     private Connection mysqlConnection;
     private final Logger logger = LoggerFactory.getLogger(MySqlConnector.class);
 
@@ -28,7 +30,7 @@ public class MySqlConnector {
     public void connectToDb() {
         loadMySqlDriver();
         try {
-            mysqlConnection = DriverManager.getConnection("jdbc:mysql://localhost/smartquote?user=root&password=root");
+            mysqlConnection = DriverManager.getConnection(MYSQL_URL);
         } catch (SQLException e) {
             logger.error("SQL Exception at connectToDb in MySQLConnector: " + e.getMessage());
         }
@@ -36,7 +38,7 @@ public class MySqlConnector {
 
     public void loadMySqlDriver(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(MYSQL_DRIVER);
         } catch (ClassNotFoundException e) {
             logger.error("ClassNotFoundException at loadMySqlDriver in MySQLConnector: " + e.getMessage());
         }

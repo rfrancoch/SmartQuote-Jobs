@@ -10,10 +10,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Properties;
 
 public class MailService {
 
+    public static final String MIME_TYPE = "text/html; charset=utf-8";
     static Session mailSession;
     private final Logger logger = LoggerFactory.getLogger(MySqlService.class);
     private PropertiesUtil propertiesUtil;
@@ -33,7 +33,7 @@ public class MailService {
 
             mailMessage.setSubject(subject);
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(body, "text/html; charset=utf-8");
+            messageBodyPart.setContent(body, MIME_TYPE);
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);

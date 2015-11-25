@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Properties;
+import static main.java.com.pernix.smartquote.constants.PropertiesUtilConstant.*;
 
 public class PropertiesUtil {
 
@@ -19,31 +20,30 @@ public class PropertiesUtil {
         properties = new Properties();
 
         try {
-            //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            properties.load( ClassLoader.getSystemResourceAsStream("email.properties"));
+            properties.load( ClassLoader.getSystemResourceAsStream(PROPERTIES));
         } catch (IOException e) {
             logger.error("IOException at initializeProperties in PropertiesUtil " + e.getMessage());
         }
     }
 
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     public String getEmailProtocol(){
-        return properties.getProperty("smartquote.email.protocol");
+        return properties.getProperty(PROTOCOL);
     }
 
     public String getEmailUsername(){
-        return properties.getProperty("smartquote.email.user");
+        return properties.getProperty(USER);
     }
 
     public String getEmailPassword(){
-        return properties.getProperty("smartquote.email.password");
+        return properties.getProperty(PASSWORD);
     }
 
     public String getEmailServer(){
-        return properties.getProperty("smartquote.email.server");
+        return properties.getProperty(SERVER);
     }
 }
 

@@ -20,22 +20,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 public class TransformerEngine {
 
-    private final Logger logger = LoggerFactory.getLogger(TransformerEngine.class);
+    public static final String UTF_8 = "UTF-8";
+    public static final String STYLE_XSL = "style.xsl";
+    private final static Logger logger = LoggerFactory.getLogger(TransformerEngine.class);
 
     public static String transformXMLtoHTML(String xml){
-        String result ="";
+        String result = null;
         try {
-            Element node = (Element) DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8"))).getDocumentElement();
-            URL htmlXLSOutput = ClassLoader.getSystemResource("style.xsl");
+            Element node = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes(UTF_8))).getDocumentElement();
+            URL htmlXLSOutput = ClassLoader.getSystemResource(STYLE_XSL);
             result = transform(node, htmlXLSOutput);
         } catch (IOException | ParserConfigurationException | SAXException e) {
-            e.printStackTrace();
+            logger.error("IOException, ParserConfigurationException or SAXException at transformXMLtoHTML in Transformer Engine " + e.getMessage());
         }
         return result;
     }
@@ -52,9 +53,9 @@ public class TransformerEngine {
             Transformer transformer = factory.newTransformer(xslStream);
             Templates xsl = factory.newTemplates(xslStream);
             transformer.transform(xmlInput, result);
-            processedDocument = ((ByteArrayOutputStream) ((StreamResult) result).getOutputStream()).toString("utf-8");
+            processedDocument = ((ByteArrayOutputStream) ((StreamResult) result).getOutputStream()).toString(UTF_8);
         } catch (TransformerException | UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("TransformerException or UnsupportedEncodingException at transform in TransformEngine " + e.getMessage());
         }
         return processedDocument;
     }

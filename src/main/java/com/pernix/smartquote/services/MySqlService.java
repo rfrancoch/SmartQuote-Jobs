@@ -4,11 +4,11 @@ import main.java.com.pernix.smartquote.models.RequisitionInfo;
 import main.java.com.pernix.smartquote.mysql.connector.MySqlConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import static main.java.com.pernix.smartquote.constants.MySQLConstant.*;
 
 public class MySqlService {
 
@@ -60,13 +60,13 @@ public class MySqlService {
     private RequisitionInfo getRequisitionObjectFromResultSet(ResultSet resultSet) throws SQLException {
         RequisitionInfo requisition = new RequisitionInfo();
 
-        requisition.setDescription(resultSet.getString("description"));
-        requisition.setShipping_address(resultSet.getString("shipping_address"));
-        requisition.setQuantity(resultSet.getDouble("quantity"));
-        requisition.setBase_amount(resultSet.getDouble("base_amount"));
-        requisition.setLimit_date(resultSet.getDate("limit_date"));
-        requisition.setTitle(resultSet.getString("title"));
-        requisition.setEmail(resultSet.getString("email"));
+        requisition.setDescription(resultSet.getString(DESCRIPTION));
+        requisition.setShipping_address(resultSet.getString(SHIPPING_ADDRESS));
+        requisition.setQuantity(resultSet.getDouble(QUANTITY));
+        requisition.setBase_amount(resultSet.getDouble(BASE_AMOUNT));
+        requisition.setLimit_date(resultSet.getDate(LIMIT_DATE));
+        requisition.setTitle(resultSet.getString(TITLE));
+        requisition.setEmail(resultSet.getString(EMAIL));
 
         return requisition;
     }
