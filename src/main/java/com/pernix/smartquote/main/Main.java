@@ -7,6 +7,8 @@ import main.java.com.pernix.smartquote.services.ServiceFactory;
 import main.java.com.pernix.smartquote.transformer.TransformerEngine;
 import main.java.com.pernix.smartquote.transformer.XMLSerializer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -14,16 +16,22 @@ public class Main {
 
     public static void main(String[] args) {
         MySqlService mySqlService = new MySqlService();
-        ArrayList<RequisitionInfo> requisitionsRetrieved = mySqlService.getNewRequisitions();
+        HashMap<String, ArrayList<RequisitionInfo>> requisitionsRetrieved = mySqlService.getNewRequisitions();
         MailService mailService = ServiceFactory.getMailService();
         TransformerEngine transformerEngine = new TransformerEngine();
         XMLSerializer xmlSerializer = new XMLSerializer();
 
-        for(RequisitionInfo requisition : requisitionsRetrieved){
-            String[] email = {requisition.getEmail()};
-            String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisition));
-            mailService.generateAndSendEmail(email, EMAIL_SUBJECT, mailBody);
-        }
+        for (Map.Entry<String, ArrayList<RequisitionInfo>> requisitionInfoListByCategory : requisitionsRetrieved.entrySet()){
 
+            ArrayList<RequisitionInfo> requisitionInfos = requisitionInfoListByCategory.getValue();
+            ArrayList<String> emails = new ArrayList<>();
+
+            for (RequisitionInfo requisitionInfo : requisitionInfos){
+                emails.add(requisitionInfo.getEmail());
+            }
+            String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitionInfos.get(0)));
+            mailService.generateAndSendEmail(emails, EMAIL_SUBJECT, mailBody);
+
+        }
     }
 }

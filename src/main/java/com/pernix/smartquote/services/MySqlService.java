@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import static main.java.com.pernix.smartquote.constants.MySQLConstant.*;
 
 public class MySqlService {
@@ -43,13 +45,19 @@ public class MySqlService {
         }
         return selectResult;
     }
-    public ArrayList<RequisitionInfo> getNewRequisitions(){
+    public HashMap<String, ArrayList<RequisitionInfo>> getNewRequisitions(){
         ResultSet selectResult = selectNewRequisitions();
-        ArrayList<RequisitionInfo> requisitionsRetrieved = new ArrayList<>();
-
+        HashMap<String, ArrayList<RequisitionInfo>>  requisitionsRetrieved = new HashMap<>();
+        ArrayList<RequisitionInfo> requisitionInfos;
         try {
             while (selectResult.next()){
-                requisitionsRetrieved.add(getRequisitionObjectFromResultSet(selectResult));
+                RequisitionInfo requisitionInfo = getRequisitionObjectFromResultSet(selectResult);
+                if(requisitionsRetrieved.get(requisitionInfo.getTitle()) == null){
+                    requisitionInfos = new ArrayList<>();
+                    requisitionInfos.add(requisitionInfo);
+                    requisitionsRetrieved.put(requisitionInfo.getTitle(), requisitionInfos);
+                }
+                requisitionsRetrieved.get(requisitionInfo.getTitle()).add(requisitionInfo);
             }
         } catch (SQLException e) {
             logger.error("SQLException at getNewRequsitions in MySqlService " + e.getMessage());

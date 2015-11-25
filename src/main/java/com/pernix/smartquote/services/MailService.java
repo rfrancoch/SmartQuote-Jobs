@@ -8,6 +8,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MailService {
 
@@ -22,12 +24,12 @@ public class MailService {
         this.propertiesUtil = properties;
     }
 
-    public boolean generateAndSendEmail(String [] recipients, String subject, String body){
+    public boolean generateAndSendEmail(ArrayList<String> recipients, String subject, String body){
         MimeMessage mailMessage = new MimeMessage(mailSession);
         boolean result = false;
         try {
             for(String recipient : recipients){
-                    mailMessage.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(recipient));
+                    mailMessage.addRecipient(Message.RecipientType.BCC, new InternetAddress(recipient));
             }
             createEmail(subject, body, mailMessage);
             javax.mail.Transport transport = connectWithEmailServer();

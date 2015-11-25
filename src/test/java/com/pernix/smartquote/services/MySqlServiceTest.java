@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MySqlServiceTest {
 
@@ -32,7 +33,7 @@ public class MySqlServiceTest {
 
     @Test
     public void testGetNewRequisitions(){
-        ArrayList<RequisitionInfo> requisitionsRetrieved = mySqlService.getNewRequisitions();
+       HashMap requisitionsRetrieved = mySqlService.getNewRequisitions();
         Assert.assertTrue(requisitionsRetrieved.size() > 0);
     }
 
