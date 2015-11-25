@@ -15,7 +15,6 @@ public class XMLSerializerTest {
         RequisitionInfo requisition = new RequisitionInfo("Vasos plasticos", "Tres Rios", 2.0, 30000.0, Calendar.getInstance().getTime(), "Hogar", "example@exaple.com");
         xmlSerializer = new XMLSerializer();
         String result = xmlSerializer.serializeRequisition(requisition);
-        System.out.println(result);
         Assert.assertNotEquals("", result);
     }
 }

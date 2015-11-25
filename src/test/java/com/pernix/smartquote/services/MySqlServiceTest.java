@@ -25,22 +25,9 @@ public class MySqlServiceTest {
     }
 
     @Test
-    public void testSelectNewRequisitions(){
+    public void testSelectNewRequisitions() {
         ResultSet selectResult = mySqlService.selectNewRequisitions();
         Assert.assertNotNull(selectResult);
-    }
-
-    public void testGetRequisitionObjectFromResultSet() throws SQLException {
-
-        ResultSet mockedResultSet = Mockito.mock(ResultSet.class);
-        Mockito.when(mockedResultSet.getInt("id")).thenReturn(1);
-        Mockito.when(mockedResultSet.getString("description")).thenReturn("Monitores");
-        Mockito.when(mockedResultSet.getString("shipping_address")).thenReturn("Tres Rios, Cartago");
-        Mockito.when(mockedResultSet.getDouble("quantity")).thenReturn(10.0);
-        Mockito.when(mockedResultSet.getDouble("base_amount")).thenReturn(2000000.0);
-        Mockito.when(mockedResultSet.getDate("limit_date")).thenReturn(Date.valueOf("2015/08/06 15:59:48"));
-        Mockito.when(mockedResultSet.getString("title")).thenReturn("Electronicos");
-        Mockito.when(mockedResultSet.getString("email")).thenReturn("example@example.com");
     }
 
     @Test

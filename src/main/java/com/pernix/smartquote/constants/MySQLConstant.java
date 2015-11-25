@@ -8,6 +8,6 @@ public final class MySQLConstant {
     public static final String BASE_AMOUNT = "base_amount";
     public static final String LIMIT_DATE = "limit_date";
     public static final String TITLE = "title";
-    public static final String EMAIL = "quantity";
+    public static final String EMAIL = "email";
 
 }
