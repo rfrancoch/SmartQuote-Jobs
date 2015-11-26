@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public class MySqlConnector {
 
-    private String USERNAME = "root";
-    private String PASSWORD = "root";
+    private String USERNAME = "squser";
+    private String PASSWORD = "sq12345";
     public final String MYSQL_URL = "jdbc:mysql://localhost/smartquote?user=" + USERNAME + "&password=" + PASSWORD;
     public final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
     private Connection mysqlConnection;
