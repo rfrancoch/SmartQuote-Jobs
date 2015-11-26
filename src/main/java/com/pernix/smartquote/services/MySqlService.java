@@ -4,6 +4,8 @@ import main.java.com.pernix.smartquote.models.RequisitionInfo;
 import main.java.com.pernix.smartquote.mysql.connector.MySqlConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,13 +16,15 @@ import static main.java.com.pernix.smartquote.constants.MySQLConstant.*;
 
 public class MySqlService {
 
-    public static final String SELECT_NEW_REQUISITIONS =    "SELECT r.description, r.shipping_address, r.quantity, r.base_amount, r.limit_date, c.title, u.email \n" +
+    private static final String SELECT_NEW_REQUISITIONS =   "SELECT r.id, r.description, r.shipping_address, r.quantity, r.base_amount, r.limit_date, c.title, u.email \n" +
                                                             "FROM requisitions r, subscription s, user u, category c \n" +
                                                             "WHERE r.status = 0 \n" +
                                                             "and r.isnotified_open = 0\n" +
                                                             "and u.id = s.id_user\n" +
                                                             "and c.id = r.id_category /* only for the description of the category */\n" +
                                                             "and r.id_category = s.id_category;";
+
+    private static final String UPDATE_REQUISITION = "update requisitions set isnotified_open = b'0' where id = ";
     private MySqlConnector mySqlConnector;
     private final Logger logger = LoggerFactory.getLogger(MySqlService.class);
 
@@ -68,6 +72,7 @@ public class MySqlService {
     private RequisitionInfo getRequisitionObjectFromResultSet(ResultSet resultSet) throws SQLException {
         RequisitionInfo requisition = new RequisitionInfo();
 
+        requisition.setRequisition_id(resultSet.getInt(REQUISITION_ID));
         requisition.setDescription(resultSet.getString(DESCRIPTION));
         requisition.setShipping_address(resultSet.getString(SHIPPING_ADDRESS));
         requisition.setQuantity(resultSet.getDouble(QUANTITY));
@@ -77,5 +82,15 @@ public class MySqlService {
         requisition.setEmail(resultSet.getString(EMAIL));
 
         return requisition;
+    }
+
+    public void setRequisitionNotified(int id){
+        PreparedStatement statement = null;
+        try {
+            statement = mySqlConnector.getMysqlConnection().prepareStatement(UPDATE_REQUISITION + id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error at setRequisitionNotified in MySqlService " + e.getMessage());
+        }
     }
 }

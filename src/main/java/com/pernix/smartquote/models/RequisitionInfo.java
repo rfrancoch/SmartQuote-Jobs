@@ -7,6 +7,7 @@ import java.util.Date;
 @XmlRootElement
 public class RequisitionInfo {
 
+    private int requisition_id;
     private String description;
     private String shipping_address;
     private double quantity;
@@ -18,7 +19,7 @@ public class RequisitionInfo {
     public RequisitionInfo() {
     }
 
-    public RequisitionInfo(String description, String shipping_address, double quantity, double base_amount, Date limit_date, String title, String email) {
+    public RequisitionInfo(int requisition_id, String description, String shipping_address, double quantity, double base_amount, Date limit_date, String title, String email) {
         this.description = description;
         this.shipping_address = shipping_address;
         this.quantity = quantity;
@@ -26,6 +27,16 @@ public class RequisitionInfo {
         this.limit_date = limit_date;
         this.title = title;
         this.email = email;
+        this.requisition_id = requisition_id;
+    }
+
+
+    public int getRequisition_id() {
+        return requisition_id;
+    }
+
+    public void setRequisition_id(int requisition_id) {
+        this.requisition_id = requisition_id;
     }
 
     public String getShipping_address() {

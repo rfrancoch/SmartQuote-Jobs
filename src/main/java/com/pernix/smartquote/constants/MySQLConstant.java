@@ -1,7 +1,7 @@
 package main.java.com.pernix.smartquote.constants;
 
 public final class MySQLConstant {
-
+    public static final String REQUISITION_ID = "id";
     public static final String DESCRIPTION = "description";
     public static final String SHIPPING_ADDRESS = "shipping_address";
     public static final String QUANTITY = "quantity";

@@ -12,7 +12,7 @@ public class XMLSerializerTest {
 
     @Test
     public void testSerializeRequisition(){
-        RequisitionInfo requisition = new RequisitionInfo("Vasos plasticos", "Tres Rios", 2.0, 30000.0, Calendar.getInstance().getTime(), "Hogar", "example@exaple.com");
+        RequisitionInfo requisition = new RequisitionInfo(1,"Vasos plasticos", "Tres Rios", 2.0, 30000.0, Calendar.getInstance().getTime(), "Hogar", "example@exaple.com");
         xmlSerializer = new XMLSerializer();
         String result = xmlSerializer.serializeRequisition(requisition);
         Assert.assertNotEquals("", result);

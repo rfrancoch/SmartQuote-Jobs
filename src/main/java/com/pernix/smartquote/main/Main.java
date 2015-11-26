@@ -29,9 +29,9 @@ public class Main {
             for (RequisitionInfo requisitionInfo : requisitionInfos){
                 emails.add(requisitionInfo.getEmail());
             }
+            mySqlService.setRequisitionNotified(requisitionInfos.get(0).getRequisition_id());
             String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitionInfos.get(0)));
             mailService.generateAndSendEmail(emails,EMAIL_SUBJECT, mailBody);
-
         }
     }
 }

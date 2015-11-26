@@ -13,14 +13,14 @@ public class RequisitionInfoTest {
 
     @Test
     public void testCreateRequisitionInfo(){
-        requisitionInfo = new RequisitionInfo("Necesito monitores de computadora 20'", "Tres Rios", 20.0, 100000.0, Calendar.getInstance().getTime(), "Electronico", "test@test.com");
+        requisitionInfo = new RequisitionInfo(1, "Necesito monitores de computadora 20'", "Tres Rios", 20.0, 100000.0, Calendar.getInstance().getTime(), "Electronico", "test@test.com");
         Assert.assertNotNull(requisitionInfo);
     }
 
     @Test
     public void testGetsFromRequisitionInfo(){
         Date currentDate = Calendar.getInstance().getTime();
-        requisitionInfo = new RequisitionInfo("Necesito monitores de computadora 20'", "Tres Rios", 20.0, 100000.0,currentDate, "Electronico", "test@test.com");
+        requisitionInfo = new RequisitionInfo(1, "Necesito monitores de computadora 20'", "Tres Rios", 20.0, 100000.0,currentDate, "Electronico", "test@test.com");
         Assert.assertEquals("Necesito monitores de computadora 20'", requisitionInfo.getDescription());
         Assert.assertEquals("Tres Rios", requisitionInfo.getShipping_address());
         Assert.assertTrue(20.0 == requisitionInfo.getQuantity());
