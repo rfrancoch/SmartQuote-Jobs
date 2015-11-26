@@ -24,7 +24,7 @@ public class MySqlService {
                                                             "and c.id = r.id_category /* only for the description of the category */\n" +
                                                             "and r.id_category = s.id_category;";
 
-    private static final String UPDATE_REQUISITION = "update requisitions set isnotified_open = b'0' where id = ";
+    private static final String UPDATE_REQUISITION = "update requisitions set isnotified_open = b'1', status=1 where id = ";
     private MySqlConnector mySqlConnector;
     private final Logger logger = LoggerFactory.getLogger(MySqlService.class);
 
@@ -49,19 +49,16 @@ public class MySqlService {
         }
         return selectResult;
     }
-    public HashMap<String, ArrayList<RequisitionInfo>> getNewRequisitions(){
+    public HashMap<String, ArrayList<RequisitionInfo>> getNewRequisitions() {
         ResultSet selectResult = selectNewRequisitions();
         HashMap<String, ArrayList<RequisitionInfo>>  requisitionsRetrieved = new HashMap<>();
-        ArrayList<RequisitionInfo> requisitionInfos;
         try {
             while (selectResult.next()){
                 RequisitionInfo requisitionInfo = getRequisitionObjectFromResultSet(selectResult);
-                if(requisitionsRetrieved.get(requisitionInfo.getTitle()) == null){
-                    requisitionInfos = new ArrayList<>();
-                    requisitionInfos.add(requisitionInfo);
-                    requisitionsRetrieved.put(requisitionInfo.getTitle(), requisitionInfos);
+                if (!requisitionsRetrieved.keySet().contains(String.valueOf(requisitionInfo.getRequisition_id()))) {
+                    requisitionsRetrieved.put(String.valueOf(requisitionInfo.getRequisition_id()), new ArrayList<RequisitionInfo>());
                 }
-                requisitionsRetrieved.get(requisitionInfo.getTitle()).add(requisitionInfo);
+                requisitionsRetrieved.get(String.valueOf(requisitionInfo.getRequisition_id())).add(requisitionInfo);
             }
         } catch (SQLException e) {
             logger.error("SQLException at getNewRequsitions in MySqlService " + e.getMessage());

@@ -21,17 +21,21 @@ public class Main {
         TransformerEngine transformerEngine = new TransformerEngine();
         XMLSerializer xmlSerializer = new XMLSerializer();
 
-        for (Map.Entry<String, ArrayList<RequisitionInfo>> requisitionInfoListByCategory : requisitionsRetrieved.entrySet()){
+        for (Map.Entry<String, ArrayList<RequisitionInfo>> requisitionInfoListByRequisitionId : requisitionsRetrieved.entrySet()){
 
-            ArrayList<RequisitionInfo> requisitionInfos = requisitionInfoListByCategory.getValue();
+            ArrayList<RequisitionInfo> requisitionInfos = requisitionInfoListByRequisitionId.getValue();
             ArrayList<String> emails = new ArrayList<>();
 
-            for (RequisitionInfo requisitionInfo : requisitionInfos){
-                emails.add(requisitionInfo.getEmail());
-            }
-            mySqlService.setRequisitionNotified(requisitionInfos.get(0).getRequisition_id());
+            getEmailAddressesIntoArray(requisitionInfos, emails);
             String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitionInfos.get(0)));
-            mailService.generateAndSendEmail(emails,EMAIL_SUBJECT, mailBody);
+            mailService.generateAndSendEmail(emails, EMAIL_SUBJECT, mailBody);
+            mySqlService.setRequisitionNotified(Integer.parseInt(requisitionInfoListByRequisitionId.getKey()));
+        }
+    }
+
+    private static void getEmailAddressesIntoArray(ArrayList<RequisitionInfo> requisitionInfos, ArrayList<String> emails) {
+        for (RequisitionInfo requisitionInfo : requisitionInfos){
+            emails.add(requisitionInfo.getEmail());
         }
     }
 }
