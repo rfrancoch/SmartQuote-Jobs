@@ -8,7 +8,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MailService {
@@ -44,7 +43,7 @@ public class MailService {
     }
 
     private void createEmail(String subject, String body, MimeMessage mailMessage) throws MessagingException {
-        mailMessage.setSubject(subject);
+        mailMessage.setSubject(subject,"UTF-8");
         BodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(body, MIME_TYPE);
 

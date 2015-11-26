@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Main {
 
-    public static final String EMAIL_SUBJECT = "Nueva notificación de solicitud";
+    public static final String EMAIL_SUBJECT = new String("Nueva notificaci\u00F3n de solicitud");
 
     public static void main(String[] args) {
         MySqlService mySqlService = new MySqlService();
@@ -30,7 +30,7 @@ public class Main {
                 emails.add(requisitionInfo.getEmail());
             }
             String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitionInfos.get(0)));
-            mailService.generateAndSendEmail(emails, EMAIL_SUBJECT, mailBody);
+            mailService.generateAndSendEmail(emails,EMAIL_SUBJECT, mailBody);
 
         }
     }
