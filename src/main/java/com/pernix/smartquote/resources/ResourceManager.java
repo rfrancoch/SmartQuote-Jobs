@@ -1,9 +1,14 @@
 package main.java.com.pernix.smartquote.resources;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.URL;
 
 public class ResourceManager {
+    private final static Logger logger = LoggerFactory.getLogger(ResourceManager.class);
+
 
     public static InputStream getResourceAsInputStream(String resourceName){
         InputStream inputStreamFile = ClassLoader.getSystemResourceAsStream(resourceName);
@@ -25,7 +30,7 @@ public class ResourceManager {
             }
             br.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException at getFileAsString in ResourceManager " + e.getMessage());
         }
         return result;
     }
