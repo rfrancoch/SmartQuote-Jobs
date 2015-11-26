@@ -2,7 +2,6 @@ package main.java.com.pernix.smartquote.services;
 import main.java.com.pernix.smartquote.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 public class MailService {
 
     public static final String MIME_TYPE = "text/html; charset=utf-8";
+    public static final String UTF_8 = "UTF-8";
     private static Session mailSession;
     private final Logger logger = LoggerFactory.getLogger(MySqlService.class);
     private PropertiesUtil propertiesUtil;
@@ -43,7 +43,7 @@ public class MailService {
     }
 
     private void createEmail(String subject, String body, MimeMessage mailMessage) throws MessagingException {
-        mailMessage.setSubject(subject,"UTF-8");
+        mailMessage.setSubject(subject, UTF_8);
         BodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(body, MIME_TYPE);
 

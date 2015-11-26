@@ -24,7 +24,7 @@ public class MySqlService {
                                                             "and c.id = r.id_category /* only for the description of the category */\n" +
                                                             "and r.id_category = s.id_category;";
 
-    private static final String UPDATE_REQUISITION = "update requisitions set isnotified_open = b'1', status=1 where id = ";
+    private static final String UPDATE_REQUISITION = "UPDATE requisitions SET isnotified_open = b'1', status=1 WHERE id = ";
     private MySqlConnector mySqlConnector;
     private final Logger logger = LoggerFactory.getLogger(MySqlService.class);
 
@@ -55,15 +55,27 @@ public class MySqlService {
         try {
             while (selectResult.next()){
                 RequisitionInfo requisitionInfo = getRequisitionObjectFromResultSet(selectResult);
-                if (!requisitionsRetrieved.keySet().contains(String.valueOf(requisitionInfo.getRequisition_id()))) {
-                    requisitionsRetrieved.put(String.valueOf(requisitionInfo.getRequisition_id()), new ArrayList<RequisitionInfo>());
+                if (!requisitionIsInHash(requisitionsRetrieved, requisitionInfo)) {
+                    addEmptyListToRequisitionsHash(requisitionsRetrieved, requisitionInfo);
                 }
-                requisitionsRetrieved.get(String.valueOf(requisitionInfo.getRequisition_id())).add(requisitionInfo);
+                addRequisitionToList(requisitionsRetrieved, requisitionInfo);
             }
         } catch (SQLException e) {
-            logger.error("SQLException at getNewRequsitions in MySqlService " + e.getMessage());
+            logger.error("SQLException at getNewRequisitions in MySqlService " + e.getMessage());
         }
         return requisitionsRetrieved;
+    }
+
+    private boolean addRequisitionToList(HashMap<String, ArrayList<RequisitionInfo>> requisitionsRetrieved, RequisitionInfo requisitionInfo) {
+        return requisitionsRetrieved.get(String.valueOf(requisitionInfo.getRequisition_id())).add(requisitionInfo);
+    }
+
+    private boolean requisitionIsInHash(HashMap<String, ArrayList<RequisitionInfo>> requisitionsRetrieved, RequisitionInfo requisitionInfo) {
+        return requisitionsRetrieved.keySet().contains(String.valueOf(requisitionInfo.getRequisition_id()));
+    }
+
+    private void addEmptyListToRequisitionsHash(HashMap<String, ArrayList<RequisitionInfo>> requisitionsRetrieved, RequisitionInfo requisitionInfo) {
+        requisitionsRetrieved.put(String.valueOf(requisitionInfo.getRequisition_id()), new ArrayList<>());
     }
 
     private RequisitionInfo getRequisitionObjectFromResultSet(ResultSet resultSet) throws SQLException {

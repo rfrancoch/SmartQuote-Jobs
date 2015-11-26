@@ -22,20 +22,18 @@ public class Main {
         XMLSerializer xmlSerializer = new XMLSerializer();
 
         for (Map.Entry<String, ArrayList<RequisitionInfo>> requisitionInfoListByRequisitionId : requisitionsRetrieved.entrySet()){
-
-            ArrayList<RequisitionInfo> requisitionInfos = requisitionInfoListByRequisitionId.getValue();
-            ArrayList<String> emails = new ArrayList<>();
-
-            getEmailAddressesIntoArray(requisitionInfos, emails);
-            String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitionInfos.get(0)));
-            mailService.generateAndSendEmail(emails, EMAIL_SUBJECT, mailBody);
+            ArrayList<RequisitionInfo> requisitions = requisitionInfoListByRequisitionId.getValue();
+            String mailBody = transformerEngine.transformXMLtoHTML(xmlSerializer.serializeRequisition(requisitions.get(0)));
+            mailService.generateAndSendEmail(getEmailAddressesIntoArray(requisitions), EMAIL_SUBJECT, mailBody);
             mySqlService.setRequisitionNotified(Integer.parseInt(requisitionInfoListByRequisitionId.getKey()));
         }
     }
 
-    private static void getEmailAddressesIntoArray(ArrayList<RequisitionInfo> requisitionInfos, ArrayList<String> emails) {
-        for (RequisitionInfo requisitionInfo : requisitionInfos){
+    private static  ArrayList<String> getEmailAddressesIntoArray(ArrayList<RequisitionInfo> requisitions) {
+        ArrayList<String> emails = new ArrayList<>();
+        for (RequisitionInfo requisitionInfo : requisitions){
             emails.add(requisitionInfo.getEmail());
         }
+        return emails;
     }
 }
