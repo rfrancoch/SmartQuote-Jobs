@@ -1,0 +1,35 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+                    body {background-color:rgb(84,84,84);
+                    color:white;}
+                    .requisition-notification{ text-align: center;}
+                    table {
+                    border-collapse: separate;
+                    border-spacing: 2em 1em;
+                    }
+                    h1, .footer{
+                    color: rgb(245,123,32);
+                    }
+                </style>
+</head>
+<body class="requisition-notification">
+<img src="https://drive.google.com/uc?id=0Bysr99hpvJ3hZHljb0ZUQW15a1U" height="20%" width="30%"><h1> Notificaci&oacute;n de solicitud de productos </h1>
+<h4>Existe un nuevo producto en la categor&iacute;a a la que esta suscrito, ac&aacute; los detalles de la solicitud:</h4>
+<table align="center">
+<tr>
+<th> Categor&iacute;a </th><th> Descripci&oacute;n </th><th> Cantidad </th><th> Direcci&oacute;n </th><th> Fecha l&iacute;mite </th><th> Precio base </th>
+</tr>
+<tr align="center">
+<td class="column">Hogar</td><td class="column">Vasos plasticos</td><td class="column">2.0</td><td class="column">Tres Rios</td><td class="column">2015-11-24T15:23:21.263-06:00</td><td class="column">30000.0</td>
+</tr>
+</table>
+<p> Gracias por usar Smartquote</p>
+</body>
+<footer>
+<div class="footer">
+<h4>Pernix-Labs</h4>
+</div>
+</footer>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<requisitionInfo>
+    <base_amount>30000.0</base_amount>
+    <description>Vasos plasticos</description>
+    <email>example@exaple.com</email>
+    <limit_date>2015-11-24T15:23:21.263-06:00</limit_date>
+    <quantity>2.0</quantity>
+    <shipping_address>Tres Rios</shipping_address>
+    <title>Hogar</title>
+</requisitionInfo>
